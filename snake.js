@@ -7,19 +7,18 @@ var ctx;
 // initial position
 const startX = 5;
 const startY = 5;
-// snake's head position
-headX = startX * blockSize;
-headY = startY * blockSize;
 // snake body
-snakeBody = [[headX,headY]];
+var snakeBody; // = [[headX,headY]];
 // velocity
-velocityX = 0;
-velocityY = 0;
+var velocityX; // = 0;
+var velocityY; // = 0;
 // food position
-foodX = (2*startX+1)*blockSize;
-foodY = (2*startY+1)*blockSize;
+var foodX; // = (2*startX+1)*blockSize;
+var foodY; // = (2*startY+1)*blockSize;
 // crash
-crash = false
+var crash; // = false
+// speed
+var speed;
 
 window.onload = function() {
     board = document.getElementById("board");
@@ -27,8 +26,9 @@ window.onload = function() {
     board.width = cols * blockSize;
     ctx = board.getContext("2d");   // used for drawing on the board
 
+    initialize(10);
     document.addEventListener("keyup", changeDirection);
-    this.setInterval(update, 100);  // 100 ms
+    this.setInterval(update, 1000/speed);  // ms
 }
 
 function update(){
@@ -50,7 +50,12 @@ function update(){
     if(snakeBody[0][0] < 0 || snakeBody[0][0] >= cols*blockSize || snakeBody[0][1] < 0 || snakeBody[0][1] >= rows*blockSize)
         crash = true;
     if(crash)
-        alert("Game Over. Your score: "+String(snakeBody.length))
+    {
+        // console.log("EMPIKE");
+        spd = prompt("Game Over. Your score: " +String(snakeBody.length)+ ". Choose speed level (1-20)");
+        console.log(spd);
+        initialize(spd);
+    }
 
     // draw food
     ctx.fillStyle = "lime";
@@ -97,4 +102,20 @@ function changeDirection(e){
 
 function randomInt(max){
     return Math.floor(Math.random()*max);
+}
+
+function initialize(spd = 10){
+    // console.log("initialize");
+    snakeBody = [[startX * blockSize, startY * blockSize]]
+    if(spd<1)
+        spd = 1
+    else if (spd > 20)
+        spd = 20
+    speed = spd
+    console.log("speed "+String(speed))
+    foodX = (2*startX+1)*blockSize;
+    foodY = (2*startY+1)*blockSize;
+    velocityX = 0;
+    velocityY = 0;
+    crash = false;
 }
