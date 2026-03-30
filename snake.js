@@ -19,6 +19,7 @@ var foodY; // = (2*startY+1)*blockSize;
 var crash; // = false
 // speed
 var speed;
+var gameInterval;
 
 window.onload = function() {
     board = document.getElementById("board");
@@ -26,9 +27,9 @@ window.onload = function() {
     board.width = cols * blockSize;
     ctx = board.getContext("2d");   // used for drawing on the board
 
-    initialize(10);
+    initializeGame(10);
     document.addEventListener("keyup", changeDirection);
-    this.setInterval(update, 1000/speed);  // ms
+    gameInterval = setInterval(update, 1000/speed);  // ms
 }
 
 function update(){
@@ -54,7 +55,7 @@ function update(){
         // console.log("EMPIKE");
         spd = prompt("Game Over. Your score: " +String(snakeBody.length)+ ". Choose speed level (1-20)");
         console.log(spd);
-        initialize(spd);
+        initializeGame(spd);
     }
 
     // draw food
@@ -104,13 +105,13 @@ function randomInt(max){
     return Math.floor(Math.random()*max);
 }
 
-function initialize(spd = 10){
+function initializeGame(spd = 10){
     // console.log("initialize");
-    snakeBody = [[startX * blockSize, startY * blockSize]]
+    snakeBody = [[startX * blockSize, startY * blockSize]];
     if(spd<1)
-        spd = 1
+        spd = 1;
     else if (spd > 20)
-        spd = 20
+        spd = 20;
     speed = spd
     console.log("speed "+String(speed))
     foodX = (2*startX+1)*blockSize;
@@ -118,4 +119,6 @@ function initialize(spd = 10){
     velocityX = 0;
     velocityY = 0;
     crash = false;
+    clearInterval(gameInterval);
+    gameInterval = setInterval(update, 1000 / speed);
 }
