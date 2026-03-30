@@ -28,7 +28,7 @@ window.onload = function() {
     ctx = board.getContext("2d");   // used for drawing on the board
 
     document.addEventListener("keyup", changeDirection);
-    this.setInterval(update, 200);  // 200 ms
+    this.setInterval(update, 100);  // 100 ms
 }
 
 function update(){
@@ -59,8 +59,7 @@ function update(){
     // draw snake
     ctx.fillStyle = "blue";
     for(i = 0; i < snakeBody.length; i++)
-        {// console.log(i,snakeBody[i])
-        ctx.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);}
+        ctx.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
 
     // eat food
     if(snakeBody[0][0] == foodX && snakeBody[0][1]==foodY)
@@ -68,9 +67,7 @@ function update(){
         snakeBody.push([foodX,foodY]);
         foodX = randomInt(cols) * blockSize
         foodY = randomInt(rows) * blockSize
-        // console.log("EAT");
     }
-    // console.log(snakeBody)
 }
 
 function changeDirection(e){
