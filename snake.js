@@ -27,9 +27,9 @@ window.onload = function() {
     board.width = cols * blockSize;
     ctx = board.getContext("2d");   // used for drawing on the board
 
-    initializeGame(10);
     document.addEventListener("keyup", changeDirection);
-    gameInterval = setInterval(update, 1000/speed);  // ms
+    initializeGame(10);
+    // gameInterval = setInterval(update, 1000/speed);  // ms
 }
 
 function update(){
